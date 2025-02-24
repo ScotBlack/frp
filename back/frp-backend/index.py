@@ -24,7 +24,7 @@ def index():
     cursor.close()
     conn.close()
     
-    # Convert tuples to JSON format
+    # Convert tuples to JSON format 
     users = [{"id": row[0], "name": row[1]} for row in rows]  # Adjust fields as needed
     return jsonify(users)  # ✅ Correct: Return
 
