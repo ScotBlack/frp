@@ -1,0 +1,28 @@
+.app-content {
+    padding: 1em;
+}
+
+.app-header {
+    display: flex;
+    color: rgb(39, 39, 39);
+    font-weight: 600;
+    font-size: 14px;
+    height: 2em;
+}
+
+.primary-button {
+    align-items: center;
+    background-color: rgb(83, 145, 216);
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    height: 3em;
+    margin-right: auto;
+    padding: 0 10px;
+}
+
+.primary-button:hover {
+    background-color: rgb(102, 163, 233);
+}
