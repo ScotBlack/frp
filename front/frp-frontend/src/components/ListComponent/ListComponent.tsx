@@ -3,16 +3,19 @@ import './ListComponent.css';
 import ListHeader from "./ListHeader";
 
 interface ListComponentProps {
-    data: any[];
+    data: string;
     onItemClick: (item: any) => void;
 }
+
+
 const ListComponent: React.FC<ListComponentProps> = ({ data, onItemClick }) => {
+    const parsedData = JSON.parse(data);
 
     return (
-        <div className="list-component">
+        <div className="list-component col-8">
             Recepten
             <ListHeader />
-            {data.map((item, index) => (
+            {parsedData.map((item, index) => (
                 <ListItem key={index} item={item} onClick={() => onItemClick(item)} />
             ))}
 

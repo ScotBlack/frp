@@ -9,7 +9,14 @@ const ListItem: React.FC<ListItemProps> = ({ item, onClick }) => {
         <div className="list-item" onClick={onClick} >
             <h3>{item.name}</h3>
             <p>{item.description}</p>
-            <p>Rating: {item.rating}</p>
+
+            <div className="ingredients">
+                {item.ingredients.map((ingredient) => (
+                    <span key={ingredient.id} className="ingredient-tag">
+                        {ingredient.name} ({ingredient.quantity} {ingredient.uom})
+                    </span>
+                ))}
+            </div>
         </div>
     );
 };

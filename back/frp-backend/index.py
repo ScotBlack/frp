@@ -1,32 +1,35 @@
 from flask import Flask, jsonify
-import psycopg2
+from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Api
+from flask_cors import CORS  # Import Flask-CORS
+from sqlalchemy import text
+from common.db import db
+from resources.user_resource import UserResource
+from resources.recipe_resource import RecipeResource
 
 app = Flask(__name__)
+CORS(app)
 
-app.config['DATABASE'] = {
-    'dbname': 'postgres',
-    'user': 'postgres',
-    'password': 'scot123',
-    'host': 'localhost',
-    'port': '5432'
-}
+# PostgreSQL configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = ('postgresql://postgres:scot123@localhost:5432/postgres')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-def get_db():
-    conn = psycopg2.connect(**app.config['DATABASE'])
-    return conn
+# db = SQLAlchemy()
+api = Api(app)  
 
-@app.route('/')
-def index():
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users")
-    rows = cursor.fetchall()
-    cursor.close()
-    conn.close()
+# Initialize the database
+with app.app_context():
+    db.init_app(app)
     
-    # Convert tuples to JSON format 
-    users = [{"id": row[0], "name": row[1]} for row in rows]  # Adjust fields as needed
-    return jsonify(users)  # ✅ Correct: Return
+
+# # Define API routes
+api.add_resource(UserResource, '/users', '/users/<int:id>')
+api.add_resource(RecipeResource, '/recipes', '/recipes/<int:id>')
+# api.add_resource(ChoreResource, '/chores', '/chores/<int:chore_id>') 
+
+
+with app.app_context():
+    db.create_all()  # Zorg dat de tabellen worden aangemaakt
 
 
 if __name__ == '__main__':

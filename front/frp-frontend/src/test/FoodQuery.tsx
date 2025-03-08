@@ -4,7 +4,7 @@ const FoodQuery = () => {
     const [data, setData] = useState<string>("Loading...");
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5000/")
+        fetch("http://127.0.0.1:5000/users")
             .then((response) => response.json()) // Assuming the backend returns JSON
             .then((data) => setData(JSON.stringify(data))) // Convert to string for display
             .catch((error) => console.error("Error fetching data:", error));
